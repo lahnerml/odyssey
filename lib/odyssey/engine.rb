@@ -104,6 +104,15 @@ module Odyssey
     # but it could do more in the future
     def sanitize(text)
       output = text.gsub(/<\/?[^>]+>/, '')
+      output.gsub!(/\\begin{\w}/, '')
+      output.gsub!(/\\end{\w}/, '')
+      output.gsub!(/\\chapter{\w}/, '')
+      output.gsub!(/\\section{\w}/, '')
+      output.gsub!(/\\subsection{\w}/, '')
+      output.gsub!(/\\subsubsection{\w}/, '')
+      output.gsub!(/\\paragraph{\w}/, '')
+      output.gsub!("\\item", '')
+      output
     end
 
     def analyze_syllables(_word)
