@@ -104,14 +104,21 @@ module Odyssey
     # but it could do more in the future
     def sanitize(text)
       output = text.gsub(/<\/?[^>]+>/, '')
-      output.gsub!(/\\begin{\w}/, '')
-      output.gsub!(/\\end{\w}/, '')
-      output.gsub!(/\\chapter{\w}/, '')
-      output.gsub!(/\\section{\w}/, '')
-      output.gsub!(/\\subsection{\w}/, '')
-      output.gsub!(/\\subsubsection{\w}/, '')
-      output.gsub!(/\\paragraph{\w}/, '')
+      output.gsub!(/\\begin\{\w+\}\s?\[(\w+|[\s,=])*\]/, '')
+      output.gsub!(/\\begin\{\w+\}\s?/, '')
+      output.gsub!(/\\end{\w+\}\s?/, '')
+      output.gsub!(/\\chapter\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!(/\\section\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!(/\\subsection\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!(/\\subsubsection\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!(/\\paragraph\{(\w+|[\s:\\-])*\}[\s%]?/, '')
       output.gsub!("\\item", '')
+      output.gsub!("\\caption", '')
+      output.gsub!("\\centering", '')
+      output.gsub!(/\\label\{\w+:\w+\}\s?/, '')
+      output.gsub!(/\\emph\{(\w+|\s)+\}/, '')
+      output.gsub!(/\\cite\{(\w+|[\s,])*\}/, '')
+      puts output
       output
     end
 
