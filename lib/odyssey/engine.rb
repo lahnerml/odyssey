@@ -104,6 +104,9 @@ module Odyssey
     # but it could do more in the future
     def sanitize(text)
       output = text.gsub(/<\/?[^>]+>/, '')
+      output.gsub!(/\\documentclass\{\w+\}\s?\[(\w+|[\s,=])*\]/, '')
+      output.gsub!(/\\usepackage\{\w+\}\s?\[(\w+|[\s,=])*\]/, '')
+      output.gsub!(/\\usepackage\{\w+\}\s?/, '')
       output.gsub!(/\\begin\{\w+\}\s?\[(\w+|[\s,=])*\]/, '')
       output.gsub!(/\\begin\{\w+\}\s?/, '')
       output.gsub!(/\\end{\w+\}\s?/, '')
@@ -118,7 +121,11 @@ module Odyssey
       output.gsub!(/\\label\{\w+:\w+\}\s?/, '')
       output.gsub!(/\\emph\{(\w+|\s)+\}/, '')
       output.gsub!(/\\cite\{(\w+|[\s,])*\}/, '')
-      puts output
+      output.gsub!(/\\opening\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!(/\\closing\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!(/\\signature\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!(/\\subject\{(\w+|[\s:\\-])*\}[\s%]?/, '')
+      output.gsub!("\n", " ")
       output
     end
 
